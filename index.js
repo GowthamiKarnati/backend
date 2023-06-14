@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const fs = require('fs');
+const path = require('path');
 
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asdfe45we45w345wegw345werjktjwertkj';
@@ -135,7 +136,10 @@ app.post('/login', async (req,res) => {
     res.json(postDoc);
   })
   
-
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.get('*' , (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  });
 
 app.listen(4000,()=>{
   console.log("server started")
