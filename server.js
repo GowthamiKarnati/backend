@@ -10,7 +10,7 @@ app.use(cors());
 const PORT = process.env.PORT || 3333;
 
 // configuration
-mongoose.connect()
+mongoose.connect('mongodb+srv://gowthami:gowthami-atlas@blog-cluster.zy7uvvt.mongodb.net/blog?retryWrites=true&w=majority')
     .then(() => console.log('[server][MongoDB Atlas] Connected to Database'))
     .catch(err => console.error('[server][Mongoose Error] ' + err));
 
