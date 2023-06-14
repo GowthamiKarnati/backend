@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const connectDB = () => {
-    mongoose.connect('mongodb+srv://user123:user123@cluster0.kj1mvwv.mongodb.net/blog',{})
-        .then(db =>console.log('DB is connected'))
-        .catch(err => console.error("MongoDB Connection Failed... :: " + err));
+    mongoose.connect('mongodb+srv://gowthami:gowthami-atlas@blog-cluster.zy7uvvt.mongodb.net/blog?retryWrites=true&w=majority')
+    .then(() => console.log('[server][MongoDB Atlas] Connected to Database'))
+    .catch(err => console.error('[server][Mongoose Error] ' + err));
 };
 
 module.exports = connectDB;
