@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const connectDB = require('./config/db')
+connectDB();
 const mongoose = require("mongoose");
 const User = require('./models/User');
 const Post = require('./models/Post');
@@ -14,18 +16,13 @@ const path = require('path');
 
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asdfe45we45w345wegw345werjktjwertkj';
-const connectDB = require('./config/db')
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
-connectDB();
 
 app.post('/register', async(req,res) =>{
     const {username, password} = req.body;
-
-
-
     try{
         const userDoc =  await User.create({
           username,
@@ -59,11 +56,13 @@ app.post('/login', async (req,res) => {
 
   app.get('/profile', (req,res) => {
     const {token} = req.cookies;
-    jwt.verify(token, secret, {}, (err,info) => {
+    console.log('token: ' + token);
+    token ? jwt.verify(token, secret, {}, (err,info) => {
       if (err) throw err;
       res.json(info);
-    });
+    }) : res.json({});
   });
+
   app.post('/logout', (req,res) => {
     res.cookie('token', '').json('ok');
   });
@@ -142,5 +141,5 @@ app.post('/login', async (req,res) => {
   });
 
 app.listen(4000,()=>{
-  console.log("server started")
+  console.log("server started...")
 });
